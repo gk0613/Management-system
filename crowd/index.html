@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Future Situation Simulator for Public Spaces">
+    <title>Future Situation Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="auth" class="auth">
+    <section class="hero">
+        <div class="logo"><b>FS</b> FUTURE SITUATION SIMULATOR</div>
+        <div>
+            <small>PLAN · SIMULATE · PREPARE</small>
+            <h1>See what could happen <em>before it happens.</em></h1>
+            <p>Explore crowd conditions in public spaces, identify pressure points and compare planning scenarios.</p>
+        </div>
+        <small>EDUCATIONAL PLANNING PROTOTYPE</small>
+    </section>
+
+    <section class="authside">
+        <div class="authbox">
+            <div class="logo dark"><b>FS</b> FUTURE SITUATION SIMULATOR</div>
+            <small>WELCOME</small>
+            <h2 id="authTitle">Sign in to your workspace</h2>
+            <p>Continue exploring public-space scenarios.</p>
+
+            <form id="authForm">
+                <input id="name" class="field hide" placeholder="Your name">
+                <input id="email" class="field" type="email" placeholder="Email address" required>
+                <input id="password" class="field" type="password" placeholder="Demo password" required>
+                <button class="primary wide" id="authSubmit">Sign in →</button>
+            </form>
+
+            <p class="hint">Demo account only. Data stays in this browser.</p>
+            <p id="switchLine">
+                New here?
+                <button class="link" id="switch">Create an account</button>
+            </p>
+            <button class="link" id="guest">Explore demo without signing in</button>
+        </div>
+    </section>
+</div>
+
+<!-- MAIN APPLICATION -->
+<div id="app" class="hide">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <b>FS</b> FUTURE SITUATION<br>
+            &nbsp;&nbsp;&nbsp; SIMULATOR
+        </div>
+
+        <small class="navlabel">WORKSPACE</small>
+
+        <nav>
+            <button class="nav active" data-page="overview">▦ Overview</button>
+            <button class="nav" data-page="simulation">◉ Simulation</button>
+            <button class="nav" data-page="risk">⌁ Risk Analysis</button>
+            <button class="nav" data-page="actions">✳ Preventive Actions</button>
+            <button class="nav" data-page="compare">⇄ A/B Comparison</button>
+            <button class="nav" data-page="history">◷ History</button>
+        </nav>
+
+        <div class="sidebottom">
+            <div class="tip">
+                <b>Planning Insight</b>
+                <p>Change arrival rates and zone capacities to explore different scenarios.</p>
+            </div>
+            <button id="logout" class="nav">↪ Sign out</button>
+        </div>
+    </aside>
+
+    <main>
+        <header>
+            <button id="menu" class="menu">☰</button>
+            <div>
+                <small>Workspace / <b id="crumb">Overview</b></small>
+                <h3 id="greeting">Good to see you</h3>
+            </div>
+            <span class="demo">● DEMO WORKSPACE</span>
+        </header>
+
+        <!-- OVERVIEW -->
+        <section class="page show" id="overview">
+            <div class="heading">
+                <div>
+                    <small>YOUR CONTROL CENTRE</small>
+                    <h1>Public Space Overview</h1>
+                    <p>Understand crowd flow, review risk indicators and test planning scenarios.</p>
+                </div>
+                <button class="primary" data-goto="simulation">＋ New Simulation</button>
+            </div>
+
+            <div class="metrics">
+                <article>
+                    <small>Total Crowd Estimate</small>
+                    <b id="mCrowd">420</b>
+                    <span>Across all zones</span>
+                </article>
+                <article>
+                    <small>Overall Risk Level</small>
+                    <b id="mRisk">Medium</b>
+                    <span>Highest zone indicator</span>
+                </article>
+                <article>
+                    <small>Zones Monitored</small>
+                    <b id="mZones">4</b>
+                    <span>Editable model zones</span>
+                </article>
+                <article>
+                    <small>Saved Scenarios</small>
+                    <b id="mSaved">0</b>
+                    <span>This browser</span>
+                </article>
+            </div>
+
+            <div class="cols">
+                <article class="card">
+                    <div class="cardhead">
+                        <div>
+                            <small>LIVE MODEL VIEW</small>
+                            <h3>Public Space Zone Map</h3>
+                        </div>
+                        <span class="tag">MODEL PREVIEW</span>
+                    </div>
+                    <div id="map" class="map"></div>
+                    <div class="legend">● Low &nbsp; <i>●</i> Medium &nbsp; <b>●</b> High &nbsp; <strong>●</strong> Critical</div>
+                </article>
+
+                <article class="card">
+                    <small>QUICK INSIGHT</small>
+                    <h3>What needs attention?</h3>
+                    <p id="insight">Run a simulation to generate an insight.</p>
+                    <hr>
+                    <div class="split">
+                        <span>Highest Density</span>
+                        <b id="highest">84%</b>
+                    </div>
+                    <div class="split">
+                        <span>Suggested Focus</span>
+                        <b id="focus">Main Gate</b>
+                    </div>
+                    <button class="outline wide" data-goto="risk">View Risk Analysis →</button>
+                </article>
+            </div>
+
+            <article class="card">
+                <div class="cardhead">
+                    <h3>Recent Simulations</h3>
+                    <button class="link" data-goto="history">View History →</button>
+                </div>
+                <div id="recent" class="rows empty">No saved simulations yet.</div>
+            </article>
+        </section>
+
+        <!-- SIMULATION -->
+        <section class="page" id="simulation">
+            <div class="heading">
+                <div>
+                    <small>SCENARIO BUILDER</small>
+                    <h1>Run a Crowd Simulation</h1>
+                    <p>Set conditions for a hypothetical public-space scenario.</p>
+                </div>
+                <span class="pill">ILLUSTRATIVE MODEL</span>
+            </div>
+
+            <div class="cols simcols">
+                <article class="card">
+                    <small>SCENARIO INPUTS</small>
+                    <h3>Space Configuration</h3>
+
+                    <form id="simForm">
+                        <label>Public Space Name
+                            <input class="field" id="space" value="City Central Plaza" required>
+                        </label>
+
+                        <div class="twocol">
+                            <label>People Arriving / Min
+                                <input class="field" id="arrival" type="number" min="0" max="500" value="45">
+                            </label>
+                            <label>People Exiting / Min
+                                <input class="field" id="exit" type="number" min="0" max="500" value="30">
+                            </label>
+                        </div>
+
+                        <label>Duration <b id="durationText">20 min</b>
+                            <input id="duration" type="range" min="5" max="60" step="5" value="20">
+                        </label>
+
+                        <div class="split">
+                            <b>Zone Capacities and Current Crowd</b>
+                            <small>EDIT VALUES</small>
+                        </div>
+
+                        <div id="zoneInputs"></div>
+
+                        <button class="primary wide">Run Simulation →</button>
+                        <p class="hint">Simplified educational model. Not a real-world prediction.</p>
+                    </form>
+                </article>
+
+                <article class="card">
+                    <div class="cardhead">
+                        <div>
+                            <small>SIMULATION OUTPUT</small>
+                            <h3>Scenario Results</h3>
+                        </div>
+                        <span id="resultStatus" class="tag">AWAITING RUN</span>
+                    </div>
+
+                    <div id="emptyResult" class="emptybox">
+                        <b>◉</b>
+                        <h3>Your Results Will Appear Here</h3>
+                        <p>Configure the space and run the model to view estimated crowd distribution and risk indicators.</p>
+                    </div>
+
+                    <div id="results" class="hide">
+                        <div class="metrics two">
+                            <article>
+                                <small>Estimated Final Crowd</small>
+                                <b id="rCrowd">0</b>
+                            </article>
+                            <article>
+                                <small>Overall Risk</small>
+                                <b id="rRisk">Low</b>
+                            </article>
+                        </div>
+
+                        <div id="resultMap" class="map"></div>
+                        <div id="zoneResults"></div>
+                        <button id="save" class="outline wide">Save This Scenario</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- RISK ANALYSIS -->
+        <section class="page" id="risk">
+            <div class="heading">
+                <div>
+                    <small>RISK INTELLIGENCE</small>
+                    <h1>Risk Analysis</h1>
+                    <p>Review modelled density and potential pressure points by zone.</p>
+                </div>
+            </div>
+
+            <div class="cols">
+                <article class="card darkcard">
+                    <small>OVERALL MODEL RISK</small>
+                    <h2 id="riskOverall">Medium</h2>
+                    <p>Based on estimated occupancy against configured capacity.</p>
+                </article>
+
+                <article class="card">
+                    <small>HOW TO READ THIS</small>
+                    <h3>Density Indicator</h3>
+                    <p>Density is modelled people divided by configured capacity. It is not a certified safety threshold.</p>
+                </article>
+            </div>
+
+            <article class="card">
+                <small>ZONE-BY-ZONE</small>
+                <h3>Occupancy and Risk</h3>
+                <div id="riskRows"></div>
+            </article>
+
+            <article class="card">
+                <small>BOTTLENECK REVIEW</small>
+                <h3>Potential Pressure Points</h3>
+                <div id="bottlenecks"></div>
+            </article>
+        </section>
+
+        <!-- PREVENTIVE ACTIONS -->
+        <section class="page" id="actions">
+            <div class="heading">
+                <div>
+                    <small>PREVENTIVE ACTION LAB</small>
+                    <h1>Explore Possible Interventions</h1>
+                    <p>General planning prompts to test against your model.</p>
+                </div>
+            </div>
+
+            <article class="card notice">
+                <h3>Planning Ideas, Not Instructions</h3>
+                <p>Real-world venue changes should be assessed by qualified venue and safety professionals.</p>
+            </article>
+
+            <div id="actionCards" class="actiongrid"></div>
+        </section>
+
+        <!-- A/B COMPARISON -->
+        <section class="page" id="compare">
+            <div class="heading">
+                <div>
+                    <small>SCENARIO COMPARISON</small>
+                    <h1>A/B Comparison</h1>
+                    <p>Compare the current model with modified planning assumptions.</p>
+                </div>
+            </div>
+
+            <article class="card">
+                <div class="twocol">
+                    <label>Scenario B · Arrival Rate
+                        <input class="field" id="bArrival" type="number" min="0" max="500" value="30">
+                    </label>
+                    <label>Scenario B · Exit Rate
+                        <input class="field" id="bExit" type="number" min="0" max="500" value="40">
+                    </label>
+                </div>
+
+                <label>Scenario B · Capacity Adjustment
+                    <select class="field" id="bCapacity">
+                        <option value="0">No Change</option>
+                        <option value="10">Increase by 10%</option>
+                        <option value="-10">Decrease by 10%</option>
+                    </select>
+                </label>
+
+                <button class="primary" id="compareBtn">Compare Scenarios →</button>
+            </article>
+
+            <div id="compareResults" class="cols"></div>
+            <article class="card hide" id="conclusion"></article>
+        </section>
+
+        <!-- HISTORY -->
+        <section class="page" id="history">
+            <div class="heading">
+                <div>
+                    <small>SAVED WORK</small>
+                    <h1>Simulation History</h1>
+                    <p>Saved scenarios in this browser on this device.</p>
+                </div>
+                <button id="export" class="outline">↓ Export JSON</button>
+            </div>
+
+            <article class="card">
+                <div class="cardhead">
+                    <h3>Saved Scenarios</h3>
+                    <span id="count" class="pill">0 SAVED</span>
+                </div>
+                <div id="historyRows" class="rows empty">No saved scenarios yet.</div>
+            </article>
+        </section>
+
+        <footer>
+            FUTURE SITUATION SIMULATOR · EDUCATIONAL PLANNING PROTOTYPE
+        </footer>
+    </main>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
